@@ -14,4 +14,13 @@ const errors = validator.validate({
 });
 
 // log the errors
-console.log(errors);
+// console.log(errors);
+
+// Using Field for validation: so here, we're creating 'email' field; and RequiredRule as well as the EmailRule are rules that needs to be applied for this 'email' field to perform validation
+const emailField = new Field ( 'email', [
+  new RequiredRule(),
+  new EmailRule(),
+]);
+
+// logs: ['invalid email']
+console.log(emailField.validate('test'));
