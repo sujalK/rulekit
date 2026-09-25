@@ -30,10 +30,22 @@ const schema = new Schema([
   new Field('email', [
     new RequiredRule(),
     new EmailRule()
-  ])
+  ]),
+  // Add new Field
+  new Field('age', [
+    new RequiredRule(),
+    new MinRule(18),
+  ]),
+
+  // Add another Field
+  new Field ('username', [
+    new RequiredRule(),
+    new StringRule(),
+  ]),
 ]);
 
 console.log(schema.validate({
-  email: 'test@gmail.com'
+  email: 'test@gmail.com',
+  age: 10,
 }));
 
