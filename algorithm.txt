@@ -1,0 +1,67 @@
+The overall flow inside Schema (Schema/Schema.js)
+
+Schema
+  ↓
+for each field
+  ↓
+get value
+  ↓
+for each rule
+  ↓
+run rule
+  ↓
+if error → collect it
+
+----------------------------------------------------
+The pseudocode:
+
+validate(data, schema):
+
+    errors = {}
+
+    for each field in schema:
+
+        value = data[field]
+
+        for each rule in field:
+
+            error = rule.validate(value)
+
+            if error exists:
+                add error to errors[field]
+
+    return errors
+
+
+
+Explanation:
+------------
+I didn't start with an abstract Rule hierarchy.
+I arrived at it by noticing that the validator was
+accumulating unrelated validation behaviors.
+Once I recognized that every rule had the same basic
+contract - take a value and return success or an error - I
+extracted that behavior behind a Rule abstraction.
+That allowed the validation engine to stay small
+while new rules could be added independently.
+
+So,
+Schema
+ - knows the fields
+ - knows how to run them
+
+Field
+ - knows its rules
+ - knows how to run them
+
+Rule
+ - knows how to validate one value
+
+
+The orchestration algorithm is in Schema.validate().
+It iterates over the fields, delegates each value to
+Field.validate(), and collects the resulting errors.
+Field.validate() contains the inner loop over rules.
+I deliberately keep the rule implementations independent
+of the orchestration, so adding a new rule doesn't
+require changing the algorithm.
