@@ -115,7 +115,3 @@ I asked myself: "What would confuse someone opening this repo for the first time
 - Two classes both called `validate` (the old `Validator` and the new `Schema`) would confuse newcomers without this README.
 - Having to load scripts in a fixed order in `index.html` is fragile. ES modules would fix it.
 - There's no single "hello world" snippet you can paste into a terminal. An npm package with a Node example would give one.
-
-## License
-
-MIT
